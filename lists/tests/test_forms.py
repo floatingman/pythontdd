@@ -17,3 +17,7 @@ class ItemFormTest(TestCase):
             form.errors['text'],
             [EMPTY_LIST_ERROR]
         )
+
+    def test_form_save_handles_saving_to_a_list(self):
+        form = ItemForm(data={'text': 'do me'})
+        new_item = form.save()
