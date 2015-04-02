@@ -1,3 +1,4 @@
 Django==1.7
 gunicorn==19.3.0
 requests==2.6.0
+selenium==2.45.0
