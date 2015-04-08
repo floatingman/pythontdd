@@ -6,7 +6,10 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import WebDriverException
 import sys
-from .server_tools import reset_database
+from .server_tools import reset_database, create_session_on_server
+from .management.commands.create_session import create_pre_authenticated_session
+from django.conf import settings
+
 
 DEFAULT_WAIT = 5
 SCREEN_DUMP_LOCATION = os.path.join(
@@ -114,3 +117,17 @@ class FunctionalTest(StaticLiveServerTestCase):
                 element_id, self.browser.find_element_by_tag_name('body').text
             )
         )
+
+    def create_pre_authenticated_session(self, email):
+        if self.against_staging:
+            session_key = create_session_on_server(self.server_host, email)
+        else:
+            session_key = create_pre_authenticated_session(email)
+        ## to set a cookie we need to first visit the domain.
+        ## 404 pages load the quickest!
+        self.browser.get(self.server_url + "/404_no_such_url/")
+        self.browser.add_cookie(dict(
+            name=settings.SESSION_COOKIE_NAME,
+            value=session_key,
+            path='/'
+        ))
