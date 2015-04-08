@@ -32,7 +32,7 @@ class MyListsTest(FunctionalTest):
 
         # She notices a "My lists" link, for the first time.
         self.browser.find_element_by_link_text('My lists').click()
-
+        
         # She sees that her list is in there, named according to its
         # first list item
         self.browser.find_element_by_link_text('Reticulate splines').click()
