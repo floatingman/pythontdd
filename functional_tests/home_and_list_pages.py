@@ -53,12 +53,12 @@ class ListPage(object):
         )
 
     def get_shared_with_list(self):
-        return self.test.browser.find_element_by_css_selector(
+        return self.test.browser.find_elements_by_css_selector(
             '.list-sharee'
         )
 
     def share_list_with(self, email):
-        self.get_share().send_keys(email + '\n')
+        self.get_share_box().send_keys(email + '\n')
         self.test.wait_for(lambda: self.test.assertIn(
             email,
             [item.text for item in self.get_shared_with_list()]
@@ -73,4 +73,4 @@ class ListPage(object):
         self.wait_for_new_item_in_list(item_text, current_pos + 1)
 
     def get_list_owner(self):
-        return self.test.browser.find_element_by('id_list_owner').text
+        return self.test.browser.find_element_by_id('id_list_owner').text

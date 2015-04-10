@@ -8,9 +8,9 @@ def quit_if_possible(browser):
         browser.quit()
     except:
         pass
-    
 
-class SharingTest(FunctionalTest):
+
+class ShareTest(FunctionalTest):
 
     def test_logged_in_users_lists_are_saved_as_my_lists(self):
         # Edith is a logged-in user
